@@ -1,0 +1,38 @@
+.middle {
+  display: flex;
+}
+
+.set-wrapper {
+  display: flex;
+  align-items: center;
+}
+
+.set-wrapper label {
+  font-size: 15px;
+}
+
+.input-wrapper-inner {
+  display: flex;
+  justify-content: space-evenly;
+  .newOnesWrapper {
+    border: 1px solid #333;
+    padding: 20px 40px;
+}
+.pastWrapper {
+    margin-left: 20px;
+    border: 1px solid #333;
+    padding: 20px 40px;
+    // margin: 2rem 0;
+    p {
+      font-size: 70%;
+    }
+    .inputs {
+        display: flex;
+        flex-direction: column;
+        input[type="submit"] {
+            margin: 10px auto 0;
+            width: 100px;
+        }
+    }
+  }
+}

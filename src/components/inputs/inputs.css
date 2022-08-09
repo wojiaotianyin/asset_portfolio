@@ -1,0 +1,13 @@
+.input-wrapper {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #959595;
+    padding: 1rem 2rem;
+    margin: 5px 0;
+    text-align: initial;
+}
+
+input[value="Submit"]{
+    display:block;
+    margin: 0 auto;
+}
