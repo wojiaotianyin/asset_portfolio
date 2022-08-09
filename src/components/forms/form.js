@@ -102,6 +102,7 @@ const Form = (props) => {
    * 表示したグラフデータをクリアにする
    */
   const clearData = () => {
+    console.log("hello")
     setAmountArr({ amount: [] });
     setAssetsName({ name: [] });
     setVisualized(false);
