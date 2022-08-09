@@ -12,6 +12,7 @@ const Form = (props) => {
   const [sumAssets, setSumAssets] = useState("0");
   const [pastDate, setPastDate] = useState("");
   const [dates, setDates] = useState("");
+  const [date_key, setDateKey] = useState("");
   const [state, setState] = useState({
     tasks: [{ assets_name: "", assets_amount: "" }],
   });
@@ -37,7 +38,6 @@ const Form = (props) => {
     fetchData();
   }, [setDates]);
 
-
   /**
    * 日付の成形を行う
    * @param {*} date
@@ -58,9 +58,6 @@ const Form = (props) => {
   }
 
   const addNewTask = () => {
-    console.log("====================")
-    console.log(dates)
-    console.log(visualized_)
     setState({
       tasks: [
         ...state.tasks,
@@ -80,14 +77,14 @@ const Form = (props) => {
 
   const visualization = () => {
     setVisualized(true);
-    const am = {amount:[]};
-    const nm = {name:[]};
+    const am = { amount: [] };
+    const nm = { name: [] };
     for (let i of state.tasks) {
       setSumAssets((sumAssets) => sumNumber(sumAssets, i.assets_amount));
-      am["amount"].push(i.assets_amount)
-      setAmountArr(am)
-      nm["name"].push(i.assets_name)
-      setAssetsName(nm)
+      am["amount"].push(i.assets_amount);
+      setAmountArr(am);
+      nm["name"].push(i.assets_name);
+      setAssetsName(nm);
     }
   };
 
@@ -115,9 +112,9 @@ const Form = (props) => {
   };
 
   const getCalender = (e) => {
+    const selectedIndex = e.target.options.selectedIndex;
+    setDateKey(e.target.options[selectedIndex].getAttribute("data-key"));
     const date__ = e.target.value;
-    console.log(date__)
-    console.log("asjalsj")
     const d = date__.replace(/[^0-9]/g, "-");
     setPastDate(d.slice(0, -1));
   };
@@ -125,25 +122,36 @@ const Form = (props) => {
   const visualizeFromPast = () => {
     Axios.post("/get_past_data", pastDate).then(function (res) {
       const past_data = res.data;
-      console.log(past_data);
-      const past_task = {tasks:[]}
-      for(let i of past_data.portfolio) {
-        console.log(i)
-        const el = {assets_name: i[0], assets_amount: parseInt(i[1])}
-        past_task["tasks"].push(el)
+      const past_task = { tasks: [] };
+      for (let i of past_data.portfolio) {
+        const el = { assets_name: i[0], assets_amount: parseInt(i[1]) };
+        past_task["tasks"].push(el);
       }
       setState(past_task);
     });
   };
 
   const deletePastData = () => {
+    let delete_date_ = "";
+    for(let i of dates){
+      if(i.el[0] == date_key){
+        delete_date_ = i.el[1]
+      }
+    }
+    const ans = window.confirm(delete_date_ + "のデータを削除してよろしいですか？");
+    if (!ans) {
+      return;
+    } else {
+      Axios.post("/delete", date_key).then(function (res) {
+        const delete_data = res.data;
+        console.log(delete_data);
+      });
+    }
+  };
 
-  }
-  
   // useEffect(() => {
   //   visualization();
   // }, [state]);
-
 
   // const handleSubmit=(event)=> {
   //   event.preventDefault();
@@ -247,7 +255,11 @@ const Form = (props) => {
               >
                 (
                 {dates.map((value) => {
-                  return <option key={value.el[0]}>{value.el[1]}</option>;
+                  return (
+                    <option key={value.el[0]} data-key={value.el[0]}>
+                      {value.el[1]}
+                    </option>
+                  );
                 })}
               </select>
             ) : null}
@@ -257,7 +269,8 @@ const Form = (props) => {
               onClick={() => visualizeFromPast()}
             />
             <input
-              type="submit"
+              type="button"
+              className="delete_btn"
               value="このデータを削除する"
               onClick={() => deletePastData()}
             />

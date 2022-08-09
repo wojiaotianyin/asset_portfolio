@@ -55,4 +55,22 @@
   margin: 10px auto 0;
   width: 100px;
 }
+
+.input-wrapper-inner .pastWrapper .inputs .delete_btn {
+  width: 150px;
+  margin: 10px auto 0 !important;
+  background-color: red;
+  border-radius: 20px;
+  border: none;
+  padding: 5px 10px;
+  color: antiquewhite;
+  -webkit-transition: .3s;
+  transition: .3s;
+  cursor: pointer;
+}
+
+.input-wrapper-inner .pastWrapper .inputs .delete_btn:hover {
+  background-color: #a90000;
+  color: white;
+}
 /*# sourceMappingURL=forms.css.map */

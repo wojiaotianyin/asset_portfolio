@@ -2,10 +2,10 @@ import logo from "./pie-chart.svg";
 import "./App.css";
 import "./components/forms/forms.css";
 // import Inputs from "./components/inputs/inputs";
-import Graph from "./components/graph/plot";
+// import Graph from "./components/graph/plot";
 import Form from "./components/forms/form";
-import Board from "./components/sample/sample1";
-import {useState} from "react"
+// import Board from "./components/sample/sample1";
+// import {useState} from "react"
 
 
 function App() {

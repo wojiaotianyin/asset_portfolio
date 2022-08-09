@@ -78,10 +78,9 @@ def editData():
 @app.route("/delete", methods=["POST", "GET"])
 def deleteData():
     """ DELETE """
-    data = psql.execute_query("SELECT * FROM {0}".format(table_name))
-    print("getting data from DB")
-    print(data)
-    print(len(data))
+    data = request.get_data()
+    data = json.loads(data)
+    psql.execute("DELETE FROM {0} WHERE id = '{1}'".format(table_name, data))
     return "OK"
 
 

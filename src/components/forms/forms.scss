@@ -33,6 +33,21 @@
             margin: 10px auto 0;
             width: 100px;
         }
+        .delete_btn {
+          width: 150px;
+          margin: 10px auto 0!important;
+          background-color: red;
+          border-radius: 20px;
+          border: none;
+          padding: 5px 10px;
+          color: antiquewhite;
+          transition: .3s;
+          cursor: pointer;
+          &:hover {
+            background-color: rgb(169, 0, 0);
+            color: white;
+          }
+        }
     }
   }
 }
