@@ -28,7 +28,63 @@
 
 .input-wrapper-inner .newOnesWrapper {
   border: 1px solid #333;
-  padding: 20px 40px;
+  padding: 10px 40px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: space-evenly;
+      -ms-flex-pack: space-evenly;
+          justify-content: space-evenly;
+}
+
+.input-wrapper-inner .newOnesWrapper .btnArea {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: space-evenly;
+      -ms-flex-pack: space-evenly;
+          justify-content: space-evenly;
+}
+
+.input-wrapper-inner .newOnesWrapper .btnArea input[type="button"] {
+  width: 100px;
+  border-radius: 20px;
+  border: none;
+  padding: 5px 10px;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+  cursor: pointer;
+}
+
+.input-wrapper-inner .newOnesWrapper .btnArea .addBtn {
+  background: #45b745;
+  color: #fffbdf;
+}
+
+.input-wrapper-inner .newOnesWrapper .btnArea .addBtn:hover {
+  color: #333;
+  background: #78ff78;
+}
+
+.input-wrapper-inner .blueBtn {
+  width: 100px;
+  border-radius: 20px;
+  border: none;
+  padding: 5px 10px;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+  cursor: pointer;
+  background: #9494ff;
+  color: #fffdfa;
+}
+
+.input-wrapper-inner .blueBtn:hover {
+  background: #b9b9ff;
+  color: #333;
 }
 
 .input-wrapper-inner .pastWrapper {
@@ -51,21 +107,21 @@
           flex-direction: column;
 }
 
-.input-wrapper-inner .pastWrapper .inputs input[type="submit"] {
+.input-wrapper-inner .pastWrapper .inputs .blueBtn {
   margin: 10px auto 0;
-  width: 100px;
 }
 
 .input-wrapper-inner .pastWrapper .inputs .delete_btn {
-  width: 150px;
+  width: 150px !important;
   margin: 10px auto 0 !important;
-  background-color: red;
+  background-color: #dc4646;
+  color: antiquewhite;
+  width: 100px;
   border-radius: 20px;
   border: none;
   padding: 5px 10px;
-  color: antiquewhite;
-  -webkit-transition: .3s;
-  transition: .3s;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
   cursor: pointer;
 }
 

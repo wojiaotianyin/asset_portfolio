@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-// import {useState} from "react"
 import Axios from "axios";
 import Plot from "react-plotly.js";
 Axios.defaults.baseURL = "http://127.0.0.1:5000";
@@ -67,49 +66,45 @@ const Form = (props) => {
         },
       ],
     });
-    console.log(state); //これを送信側に送る
   };
 
-  const sumNumber = (data, input) => {
-    //parseIntをしないと文字列として認識される
-    return parseInt(data) + parseInt(input);
-  };
+  // const sumNumber = (data, input) => {
+  //   //parseIntをしないと文字列として認識される
+  //   return parseInt(data) + parseInt(input);
+  // };
 
   const visualization = () => {
-    setVisualized(true);
     const am = { amount: [] };
     const nm = { name: [] };
+    let sum_ = 0;
     for (let i of state.tasks) {
-      setSumAssets((sumAssets) => sumNumber(sumAssets, i.assets_amount));
+      sum_ += i.assets_amount;
+      // setSumAssets((sumAssets) => sumNumber(sumAssets, i.assets_amount));
       am["amount"].push(i.assets_amount);
       setAmountArr(am);
       nm["name"].push(i.assets_name);
       setAssetsName(nm);
     }
+    if (parseInt(sumAssets) !== 0) {
+      setVisualized(true);
+    }
+    setSumAssets(sum_);
   };
-
-  // useEffect(() => {
-  //   console.log(visualized_);
-  // }, [visualized_]);
 
   const handleChange = (e, index) => {
     state.tasks[index][e.target.name] = e.target.value;
     setState({ tasks: state.tasks });
-    //setVisualized(false);
   };
 
   /**
    * 表示したグラフデータをクリアにする
    */
   const clearData = () => {
-    console.log("hello")
+    setVisualized(false);
     setAmountArr({ amount: [] });
     setAssetsName({ name: [] });
-    setVisualized(false);
     setSumAssets(0);
-    setState({
-      tasks: [{ assets_name: "", assets_amount: "" }],
-    });
+    setState({ tasks: [{ assets_name: "", assets_amount: "" }] });
   };
 
   const getCalender = (e) => {
@@ -129,17 +124,24 @@ const Form = (props) => {
         past_task["tasks"].push(el);
       }
       setState(past_task);
+      visualization();
     });
   };
 
+  useEffect(() => {
+    visualization();
+  }, [state, sumAssets]);
+
   const deletePastData = () => {
     let delete_date_ = "";
-    for(let i of dates){
-      if(i.el[0] == date_key){
-        delete_date_ = i.el[1]
+    for (let i of dates) {
+      if (i.el[0] == date_key) {
+        delete_date_ = i.el[1];
       }
     }
-    const ans = window.confirm(delete_date_ + "のデータを削除してよろしいですか？");
+    const ans = window.confirm(
+      delete_date_ + "のデータを削除してよろしいですか？"
+    );
     if (!ans) {
       return;
     } else {
@@ -183,12 +185,8 @@ const Form = (props) => {
    * matplotlibでグラフを作成
    */
   const savePortfolio = () => {
-    console.log("saving graph");
-    Axios.post("/post_visualization", state, {
-      post_text: "============== lets visualize by matplotlib =========",
-    }).then(function (res) {
+    Axios.post("/post_visualization", state).then(function (res) {
       const data_arr = res.data;
-      console.log(data_arr);
       alert("Portfolio Saved!");
     });
   };
@@ -229,21 +227,21 @@ const Form = (props) => {
             );
           })}
           <div>総額：{sumAssets}&nbsp;円</div>
-          <button type="button" onClick={() => addNewTask()}>
-            追加
-          </button>
-          {/* <form onSubmit={this.handleSubmit}> */}
-          <input
+          <div className="btnArea">
+            <input className="addBtn" type="button" value="追加" onClick={() => addNewTask()} />
+            {/* <input
             type="submit"
             value="可視化する"
             onClick={() => visualization()}
-          />
-          <input
-            type="submit"
-            value="保存する"
-            onClick={() => savePortfolio()}
-          />
-          <input type="button" value="クリア" onClick={() => clearData()} />
+          /> */}
+            <input
+              type="button"
+              value="保存する"
+              className="blueBtn"
+              onClick={() => savePortfolio()}
+            />
+            <input type="button" value="クリア" onClick={() => clearData()} />
+          </div>
         </div>
         <div className="pastWrapper">
           <p>過去のデータを可視化する</p>
@@ -265,8 +263,9 @@ const Form = (props) => {
               </select>
             ) : null}
             <input
-              type="submit"
+              type="button"
               value="可視化する"
+              className="blueBtn"
               onClick={() => visualizeFromPast()}
             />
             <input
@@ -277,7 +276,6 @@ const Form = (props) => {
             />
           </div>
         </div>
-        {/* </form> */}
       </div>
       <div className="graph">
         {visualized_ ? (

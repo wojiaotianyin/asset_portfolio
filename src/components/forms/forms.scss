@@ -1,3 +1,12 @@
+@mixin button {
+  width: 100px;
+  border-radius: 20px;
+  border: none;
+  padding: 5px 10px;
+  transition: 0.3s;
+  cursor: pointer;
+}
+
 .middle {
   display: flex;
 }
@@ -16,38 +25,59 @@
   justify-content: space-evenly;
   .newOnesWrapper {
     border: 1px solid #333;
-    padding: 20px 40px;
-}
-.pastWrapper {
+    padding: 10px 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    .btnArea {
+      display: flex;
+      justify-content: space-evenly;
+      input[type="button"] {
+        @include button;
+      }
+      .addBtn {
+        background: rgb(69, 183, 69);
+        color: rgb(255, 251, 223);
+        &:hover {
+          color: #333;
+          background: rgb(120, 255, 120);
+        }
+      }
+    }
+  }
+  .blueBtn {
+    @include button;
+    background: rgb(148, 148, 255);
+    color: rgb(255, 253, 250);
+    &:hover {
+      background: rgb(185, 185, 255);
+      color: #333;
+    }
+  }
+  .pastWrapper {
     margin-left: 20px;
     border: 1px solid #333;
     padding: 20px 40px;
-    // margin: 2rem 0;
     p {
       font-size: 70%;
     }
     .inputs {
-        display: flex;
-        flex-direction: column;
-        input[type="submit"] {
-            margin: 10px auto 0;
-            width: 100px;
+      display: flex;
+      flex-direction: column;
+      .blueBtn {
+        margin: 10px auto 0;
+      }
+      .delete_btn {
+        width: 150px !important;
+        margin: 10px auto 0 !important;
+        background-color: rgb(220, 70, 70);
+        color: antiquewhite;
+        @include button;
+        &:hover {
+          background-color: rgb(169, 0, 0);
+          color: white;
         }
-        .delete_btn {
-          width: 150px;
-          margin: 10px auto 0!important;
-          background-color: red;
-          border-radius: 20px;
-          border: none;
-          padding: 5px 10px;
-          color: antiquewhite;
-          transition: .3s;
-          cursor: pointer;
-          &:hover {
-            background-color: rgb(169, 0, 0);
-            color: white;
-          }
-        }
+      }
     }
   }
 }
